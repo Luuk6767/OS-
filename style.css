@@ -1,174 +1,211 @@
-/* 1. Grundinställningar */
+/* style.css */
+
+/* 1. Variabler för färger och effekter */
 :root {
-    --sweden-blue: #004b87;
-    --sweden-gold: #ffcd00;
-    --italy-red: #ce2b37; /* Touch av värdnationen Italien */
-    --dark-bg: #05080a;
-    --glass-white: rgba(255, 255, 255, 0.08);
-    --glass-border: rgba(255, 255, 255, 0.15);
-    --text-main: #ffffff;
-    --text-muted: #a0a0a0;
+    --gold: #ffcd00;
+    --blue: #004b87;
+    --dark-bg: #0a0e14;
+    --glass: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --text-white: #ffffff;
+    --text-gray: #a0a0a0;
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
+/* 2. Grundläggande layout */
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Inter', 'Segoe UI', sans-serif;
+    font-family: 'Inter', -apple-system, sans-serif;
     background-color: var(--dark-bg);
-    /* Skapar en snygg bakgrund med ljusstrålar */
+    /* En snygg bakgrund med ljussken */
     background-image: 
-        radial-gradient(circle at 10% 20%, rgba(0, 75, 135, 0.3) 0%, transparent 50%),
-        radial-gradient(circle at 90% 80%, rgba(255, 205, 0, 0.15) 0%, transparent 50%);
-    color: var(--text-main);
+        radial-gradient(circle at 10% 20%, rgba(0, 75, 135, 0.2) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(255, 205, 0, 0.1) 0%, transparent 40%);
+    color: var(--text-white);
     display: flex;
     justify-content: center;
     min-height: 100vh;
+    padding: 40px 20px;
 }
 
-/* 2. Huvudcontainern */
 .app-container {
-    width: 95%;
-    max-width: 850px;
-    margin: 40px 0;
-    background: var(--glass-white);
+    width: 100%;
+    max-width: 700px;
+    background: var(--glass);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid var(--glass-border);
-    border-radius: 32px;
-    padding: 40px;
-    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+    border-radius: 30px;
+    padding: 30px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
 }
 
-/* 3. Header & Logga */
-header {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-.logo-main {
-    width: 100px;
-    filter: drop-shadow(0 0 15px rgba(255, 205, 0, 0.4));
-    margin-bottom: 15px;
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.logo-main:hover {
-    transform: scale(1.15) rotate(3deg);
-}
-
-h1 {
-    font-size: 2.5rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: -1px;
-    background: linear-gradient(135deg, #ffffff 0%, var(--sweden-gold) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin: 0;
-}
-
-/* 4. Lag-väljaren (Horisontell scroll) */
+/* 3. Lag-väljare (Pills) */
 .team-selector {
     display: flex;
-    gap: 12px;
     overflow-x: auto;
+    gap: 12px;
     padding-bottom: 20px;
-    margin-bottom: 30px;
-    scrollbar-width: none; /* Firefox */
+    margin-bottom: 25px;
+    border-bottom: 1px solid var(--glass-border);
+    scrollbar-width: none; /* Dölj scroll i Firefox */
 }
 
-.team-selector::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+.team-selector::-webkit-scrollbar {
+    display: none; /* Dölj scroll i Chrome/Safari */
+}
 
 .team-pill {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--glass-border);
-    color: white;
-    padding: 12px 24px;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid transparent;
+    color: var(--text-gray);
+    padding: 10px 22px;
     border-radius: 50px;
     cursor: pointer;
     font-weight: 600;
     white-space: nowrap;
-    transition: all 0.3s ease;
+    transition: var(--transition);
 }
 
 .team-pill:hover {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: var(--sweden-gold);
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
 }
 
 .team-pill.active {
-    background: var(--sweden-gold);
+    background: var(--gold);
     color: var(--dark-bg);
-    box-shadow: 0 0 20px rgba(255, 205, 0, 0.4);
+    box-shadow: 0 0 15px rgba(255, 205, 0, 0.4);
 }
 
-/* 5. Flikar/Tabs */
-.tabs-nav {
+/* 4. Rubriker och logga */
+h1 {
+    font-size: 2.2rem;
+    letter-spacing: -1px;
+    margin: 10px 0;
+    background: linear-gradient(to right, #fff, var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.logo-container img {
+    width: 90px;
+    filter: drop-shadow(0 0 10px rgba(255, 205, 0, 0.3));
+    margin-bottom: 10px;
+}
+
+/* 5. Flik-navigering */
+.tabs {
     display: flex;
     justify-content: center;
     gap: 30px;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
 }
 
 .tab-link {
     text-decoration: none;
-    color: var(--text-muted);
+    color: var(--text-gray);
     font-weight: 700;
     font-size: 0.9rem;
     text-transform: uppercase;
     letter-spacing: 1px;
-    padding-bottom: 8px;
+    padding-bottom: 6px;
     border-bottom: 2px solid transparent;
-    transition: 0.3s;
+    transition: var(--transition);
+}
+
+.tab-link:hover {
+    color: white;
 }
 
 .tab-link.active {
     color: white;
-    border-bottom-color: var(--sweden-gold);
+    border-bottom-color: var(--gold);
 }
 
-/* 6. Innehållskort (Resultat & Trupp) */
-.content-card {
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 20px;
-    padding: 25px;
-    animation: slideUp 0.5s ease-out;
+/* 6. Innehållssektioner */
+.content-box {
+    animation: fadeIn 0.4s ease-out;
 }
 
-.match-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.match-item:last-child { border: none; }
-
-.score-badge {
-    background: var(--sweden-gold);
-    color: var(--dark-bg);
-    padding: 5px 15px;
-    border-radius: 8px;
-    font-weight: 800;
-    font-size: 1.1rem;
-}
-
-.scorers-list {
-    font-size: 0.85rem;
-    color: var(--sweden-gold);
-    opacity: 0.8;
-    margin-top: 5px;
-}
-
-/* 7. Animationer */
-@keyframes slideUp {
-    from { opacity: 0; transform: translateY(20px); }
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* 8. Mobilanpassning */
+/* Matchkort */
+.match-row {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid transparent;
+    transition: var(--transition);
+}
+
+.match-row:hover {
+    border-color: rgba(255, 205, 0, 0.3);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.score {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--gold);
+}
+
+.point-leaders {
+    font-size: 0.85rem;
+    color: var(--text-gray);
+    padding: 0 20px 20px 20px;
+    margin-top: -10px;
+    border-bottom: 1px solid var(--glass-border);
+    margin-bottom: 15px;
+}
+
+/* Truppen (Grid) */
+.roster-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    text-align: left;
+}
+
+.roster-group {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    border-radius: 12px;
+}
+
+.roster-group h4 {
+    margin-top: 0;
+    color: var(--gold);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+}
+
+.roster-group p {
+    margin-bottom: 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* 7. Mobilanpassning */
 @media (max-width: 600px) {
-    .app-container { padding: 20px; margin: 10px; }
-    h1 { font-size: 1.8rem; }
-    .roster-grid { grid-template-columns: 1fr; }
+    .app-container {
+        padding: 20px;
+    }
+    
+    .roster-section {
+        grid-template-columns: 1fr;
+    }
+    
+    h1 {
+        font-size: 1.7rem;
+    }
+}
