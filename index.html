@@ -3,215 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tre Kronor | AI Predictor 2026</title>
-    <style>
-        /* Modern CSS Reset & Variabler */
-        :root {
-            --sweden-blue: #004b87;
-            --sweden-gold: #ffcd00;
-            --dark-bg: #0a0e14;
-            --card-bg: rgba(255, 255, 255, 0.05);
-            --text: #ffffff;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', -apple-system, sans-serif;
-            background-color: var(--dark-bg);
-            background-image: 
-                radial-gradient(circle at 20% 30%, rgba(0, 75, 135, 0.2) 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, rgba(255, 205, 0, 0.1) 0%, transparent 40%);
-            color: var(--text);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* Container med Glassmorphism-effekt */
-        .glass-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            padding: 3rem;
-            width: 90%;
-            max-width: 450px;
-            text-align: center;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-            animation: fadeIn 1s ease-out;
-        }
-
-        /* Loggan */
-        .logo-container {
-            margin-bottom: 1.5rem;
-        }
-
-        .logo-container img {
-            width: 120px; /* Justera storlek här */
-            filter: drop-shadow(0 0 10px rgba(255, 205, 0, 0.5));
-            transition: transform 0.3s ease;
-        }
-
-        .logo-container img:hover {
-            transform: scale(1.1) rotate(5deg);
-        }
-
-        h1 {
-            font-size: 2rem;
-            letter-spacing: -1px;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(to right, #fff, var(--sweden-gold));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        p {
-            color: #a0a0a0;
-            font-size: 0.9rem;
-            margin-bottom: 2rem;
-        }
-
-        /* Interaktiva element */
-        select {
-            width: 100%;
-            padding: 15px;
-            background: rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 12px;
-            color: white;
-            font-size: 1rem;
-            margin-bottom: 1.5rem;
-            outline: none;
-            cursor: pointer;
-        }
-
-        button {
-            width: 100%;
-            padding: 15px;
-            background: var(--sweden-gold);
-            color: var(--dark-bg);
-            border: none;
-            border-radius: 12px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(255, 205, 0, 0.3);
-        }
-
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 205, 0, 0.5);
-            filter: brightness(1.1);
-        }
-
-        /* Resultat-sektion */
-        #result {
-            margin-top: 2rem;
-            padding: 1.5rem;
-            background: rgba(255, 205, 0, 0.1);
-            border-radius: 12px;
-            border: 1px solid var(--sweden-gold);
-            display: none;
-            text-align: left;
-            animation: slideUp 0.5s ease-out;
-        }
-
-        /* Animationer */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Laddnings-snurra */
-        .loader {
-            display: none;
-            width: 30px;
-            height: 30px;
-            border: 3px solid rgba(255,255,255,0.1);
-            border-top: 3px solid var(--sweden-gold);
-            border-radius: 50%;
-            margin: 1.5rem auto;
-            animation: spin 0.8s linear infinite;
-        }
-
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-    </style>
+    <title>Tre Kronor | OS 2026 Portal</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="glass-card">
-        <div class="logo-container">
-            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/8f/Sweden_national_ice_hockey_team_logo.svg/1200px-Sweden_national_ice_hockey_team_logo.svg.png" alt="Tre Kronor Logo">
-        </div>
-        
-        <h1>AI Predictor</h1>
-        <p>Analysera medaljchanserna i Milano Cortina 2026</p>
-
-        <select id="teamSelect">
-            <option value="Sverige">Sverige (Tre Kronor)</option>
-            <option value="Kanada">Kanada</option>
-            <option value="USA">USA</option>
-            <option value="Finland">Finland</option>
-        </select>
-
-        <button onclick="runAnalysis()">Starta AI-Analys</button>
-
-        <div class="loader" id="loader"></div>
-
-        <div id="result">
-            <h4 id="resTitle" style="margin-top:0; color:var(--sweden-gold)"></h4>
-            <div id="resText" style="font-size: 0.9rem; line-height: 1.4; margin-bottom: 10px;"></div>
-            <div id="resBarContainer" style="background: rgba(255,255,255,0.1); height: 8px; border-radius: 4px;">
-                <div id="resBar" style="background: var(--sweden-gold); height: 100%; width: 0%; border-radius: 4px; transition: width 1s ease-in-out;"></div>
-            </div>
-            <p id="resPercent" style="margin-top: 5px; font-weight: bold; color: white;"></p>
-        </div>
+<div class="app-container">
+    <div class="logo-container" style="text-align: center;">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/8f/Sweden_national_ice_hockey_team_logo.svg/1200px-Sweden_national_ice_hockey_team_logo.svg.png" alt="Tre Kronor">
+        <h1>MILANO CORTINA 2026</h1>
     </div>
 
-    <script>
-        const stats = {
-            "Sverige": { text: "Stark trupp med NHL-stjärnor. Defensiven är världsklass.", chance: 85 },
-            "Kanada": { text: "Alltid favoriter. McDavid-faktorn är avgörande.", chance: 92 },
-            "USA": { text: "Snabbaste laget i turneringen. Ung talang i massor.", chance: 88 },
-            "Finland": { text: "Taktiskt geni. Kan stänga ner vilket lag som helst.", chance: 78 }
-        };
+    <div class="team-selector" id="teamList"></div>
 
-        function runAnalysis() {
-            const team = document.getElementById('teamSelect').value;
-            const loader = document.getElementById('loader');
-            const resultDiv = document.getElementById('result');
-            const bar = document.getElementById('resBar');
-            
-            resultDiv.style.display = 'none';
-            bar.style.width = '0%';
-            loader.style.display = 'block';
+    <div class="tabs">
+        <a href="#" class="tab-link active" onclick="switchView(event, 'results')">Resultat</a>
+        <a href="#" class="tab-link" onclick="switchView(event, 'schedule')">Spelschema</a>
+        <a href="#" class="tab-link" onclick="switchView(event, 'ai')">AI Predictor</a>
+        <a href="#" class="tab-link" onclick="switchView(event, 'roster')">Truppen</a>
+    </div>
 
-            setTimeout(() => {
-                loader.style.display = 'none';
-                resultDiv.style.display = 'block';
-                
-                document.getElementById('resTitle').innerText = team + " Analys";
-                document.getElementById('resText').innerText = stats[team].text;
-                document.getElementById('resPercent').innerText = stats[team].chance + "% chans till medalj";
-                
-                // Animera mätaren
-                setTimeout(() => {
-                    bar.style.width = stats[team].chance + "%";
-                }, 100);
-            }, 1200);
+    <div id="content" class="content-box"></div>
+</div>
+
+<script>
+    const tournamentData = {
+        "Sverige": {
+            results: [
+                { opp: "Italien", score: "5 - 2", scorers: "Landeskog, Zibanejad, Nylander (2), Dahlin" },
+                { opp: "Finland", score: "1 - 4", scorers: "Pettersson" }
+            ],
+            upcoming: [
+                { date: "20 Feb", opp: "Kanada (Kvartsfinal)", time: "20:00" },
+                { date: "22 Feb", opp: "Eventuell Semifinal", time: "16:00" }
+            ],
+            roster: "Markström; Hedman, Dahlin; Nylander, Pettersson, Zibanejad.",
+            aiPrediction: "Sverige har 65% chans att nå semifinal. Vid vinst mot Kanada väntar troligen USA. AI förutspår en jämn match (3-2) mot Kanada."
+        },
+        "Kanada": {
+            results: [{ opp: "USA", score: "3 - 2 (OT)", scorers: "McDavid, Crosby" }],
+            upcoming: [{ date: "20 Feb", opp: "Sverige (Kvartsfinal)", time: "20:00" }],
+            roster: "Hill; Makar, Toews; McDavid, MacKinnon, Crosby.",
+            aiPrediction: "Kanada är favoriter (75% guldchans). AI förutspår att de vinner finalen mot USA med 4-2."
+        },
+        "Finland": {
+            results: [{ opp: "Sverige", score: "4 - 1", scorers: "Rantanen, Barkov" }],
+            upcoming: [{ date: "20 Feb", opp: "Schweiz (Kvartsfinal)", time: "12:00" }],
+            roster: "Saros; Heiskanen; Barkov, Rantanen, Aho.",
+            aiPrediction: "Finland förväntas nå semifinal (80% chans). AI förutspår en defensiv urladdning i bronsmatchen."
         }
-    </script>
+    };
+
+    let currentTeam = "Sverige";
+    let currentView = "results";
+
+    function init() {
+        const list = document.getElementById('teamList');
+        Object.keys(tournamentData).forEach(team => {
+            const btn = document.createElement('button');
+            btn.className = `team-pill ${team === currentTeam ? 'active' : ''}`;
+            btn.innerText = team;
+            btn.onclick = (e) => selectTeam(team, e);
+            list.appendChild(btn);
+        });
+        render();
+    }
+
+    function selectTeam(team, e) {
+        currentTeam = team;
+        document.querySelectorAll('.team-pill').forEach(b => b.classList.remove('active'));
+        e.target.classList.add('active');
+        render();
+    }
+
+    function switchView(e, view) {
+        e.preventDefault();
+        currentView = view;
+        document.querySelectorAll('.tab-link').forEach(l => l.classList.remove('active'));
+        e.target.classList.add('active');
+        render();
+    }
+
+    function render() {
+        const container = document.getElementById('content');
+        const data = tournamentData[currentTeam];
+        container.innerHTML = "";
+
+        if (currentView === 'results') {
+            data.results.forEach(m => {
+                container.innerHTML += `
+                    <div class="match-row">
+                        <div><strong>vs ${m.opp}</strong></div>
+                        <div class="score">${m.score}</div>
+                    </div>
+                    <div class="point-leaders">Målskyttar: ${m.scorers}</div>`;
+            });
+        } 
+        else if (currentView === 'schedule') {
+            data.upcoming.forEach(m => {
+                container.innerHTML += `
+                    <div class="match-row">
+                        <div><span style="color:var(--gold)">${m.date}</span> - ${m.opp}</div>
+                        <div style="font-weight:bold">${m.time}</div>
+                    </div>`;
+            });
+        }
+        else if (currentView === 'ai') {
+            container.innerHTML = `
+                <div class="content-card" style="border: 1px solid var(--gold); background: rgba(255,205,0,0.05)">
+                    <h3 style="color:var(--gold)">AI ANALYS: VÄGEN TILL FINAL</h3>
+                    <p style="line-height:1.6">${data.aiPrediction}</p>
+                    <hr style="opacity:0.2">
+                    <p><strong>AI-Tips Finalen:</strong> Kanada vs USA (4 - 2)</p>
+                    <p><strong>Guld:</strong> Kanada | <strong>Silver:</strong> USA | <strong>Brons:</strong> Sverige</p>
+                </div>`;
+        }
+        else {
+            container.innerHTML = `<div class="roster-group"><h4>Nyckelspelare</h4><p>${data.roster}</p></div>`;
+        }
+    }
+
+    init();
+</script>
 </body>
-</html>
 </html>
