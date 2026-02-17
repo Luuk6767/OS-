@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Hockey OS 2026 Predictor</title>
+    <style>
+        :root {
+            --primary: #003594; /* Italien Blå */
+            --accent: #ce2b37; /* Italien Röd */
+            --bg: #f4f4f9;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 { color: var(--primary); margin-bottom: 0.5rem; }
+        p { color: #666; }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            margin: 20px 0;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+
+        button:hover { transform: scale(1.05); background-color: #002a75; }
+
+        #result {
+            margin-top: 30px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+            border-left: 5px solid var(--accent);
+            background: #fff5f5;
+            text-align: left;
+        }
+
+        .loader {
+            display: none;
+            margin: 20px auto;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Milano Cortina 2026</h1>
+    <p>Låt vår AI förutspå medaljchanserna för ditt lag.</p>
+    
+    <select id="teamSelect">
+        <option value="Sverige">Sverige (Tre Kronor)</option>
+        <option value="Kanada">Kanada</option>
+        <option value="USA">USA</option>
+        <option value="Finland">Finland</option>
+        <option value="Schweiz">Schweiz</option>
+    </select>
+
+    <button onclick="predict()">Kör AI-Analys</button>
+
+    <div class="loader" id="loader"></div>
+
+    <div id="result">
+        <h3 id="resTitle"></h3>
+        <p id="resText"></p>
+        <strong id="resProbability"></strong>
+    </div>
+</div>
+
+<script>
+    const data = {
+        "Sverige": {
+            analysis: "Tre Kronor har visat stark defensiv under Hallam, men behöver att Lucas Raymond och EP40 levererar i PP.",
+            prob: "15% chans för Guld, 40% chans för Medalj."
+        },
+        "Kanada": {
+            analysis: "Med Connor McDavid och Sidney Crosby är Kanada den statistiska favoriten. Bredden i truppen är oöverträffad.",
+            prob: "45% chans för Guld."
+        },
+        "USA": {
+            analysis: "Ungt, snabbt och extremt skickligt lag. Deras målvaktssida ser starkast ut i turneringen.",
+            prob: "25% chans för Guld."
+        },
+        "Finland": {
+            analysis: "Sisu och struktur. Finland underskattas alltid men deras kollektiva försvarsspel är världsklass.",
+            prob: "10% chans för Guld."
+        },
+        "Schweiz": {
+            analysis: "Den stora utmanaren. Kan skrälla mot vilket storlag som helst i en kvartsfinal.",
+            prob: "5% chans för Guld."
+        }
+    };
+
+    function predict() {
+        const team = document.getElementById('teamSelect').value;
+        const loader = document.getElementById('loader');
+        const resultDiv = document.getElementById('result');
+        
+        // Återställ och visa laddare
+        resultDiv.style.display = 'none';
+        loader.style.display = 'block';
+
+        setTimeout(() => {
+            loader.style.display = 'none';
+            resultDiv.style.display = 'block';
+            
+            document.getElementById('resTitle').innerText = "Analys för " + team;
+            document.getElementById('resText').innerText = data[team].analysis;
+            document.getElementById('resProbability').innerText = "AI Sannolikhet: " + data[team].prob;
+        }, 1500); // Simulerar "tänketid" för AI:n
+    }
+</script>
+
+</body>
+</html>
