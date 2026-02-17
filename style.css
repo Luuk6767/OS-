@@ -209,3 +209,23 @@ h1 {
         font-size: 1.7rem;
     }
 }
+/* Extra för AI-fliken */
+.content-card {
+    padding: 20px;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+/* För spelschemat */
+.match-row span {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    display: block;
+}
+
+/* Gör flik-menyn scrollbar på små skärmar */
+.tabs {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 10px;
+}
