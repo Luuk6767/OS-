@@ -3,151 +3,214 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Hockey OS 2026 Predictor</title>
+    <title>Tre Kronor | AI Predictor 2026</title>
     <style>
+        /* Modern CSS Reset & Variabler */
         :root {
-            --primary: #003594; /* Italien Blå */
-            --accent: #ce2b37; /* Italien Röd */
-            --bg: #f4f4f9;
+            --sweden-blue: #004b87;
+            --sweden-gold: #ffcd00;
+            --dark-bg: #0a0e14;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --text: #ffffff;
         }
 
         body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: var(--bg);
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--dark-bg);
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(0, 75, 135, 0.2) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(255, 205, 0, 0.1) 0%, transparent 40%);
+            color: var(--text);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            margin: 0;
+            overflow-x: hidden;
         }
 
-        .container {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        /* Container med Glassmorphism-effekt */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 3rem;
+            width: 90%;
+            max-width: 450px;
             text-align: center;
-            max-width: 500px;
-            width: 100%;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            animation: fadeIn 1s ease-out;
         }
 
-        h1 { color: var(--primary); margin-bottom: 0.5rem; }
-        p { color: #666; }
+        /* Loggan */
+        .logo-container {
+            margin-bottom: 1.5rem;
+        }
 
+        .logo-container img {
+            width: 120px; /* Justera storlek här */
+            filter: drop-shadow(0 0 10px rgba(255, 205, 0, 0.5));
+            transition: transform 0.3s ease;
+        }
+
+        .logo-container img:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        h1 {
+            font-size: 2rem;
+            letter-spacing: -1px;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #fff, var(--sweden-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p {
+            color: #a0a0a0;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Interaktiva element */
         select {
             width: 100%;
-            padding: 12px;
-            margin: 20px 0;
-            border: 2px solid #ddd;
-            border-radius: 8px;
+            padding: 15px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            color: white;
             font-size: 1rem;
+            margin-bottom: 1.5rem;
+            outline: none;
+            cursor: pointer;
         }
 
         button {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: transform 0.2s;
-        }
-
-        button:hover { transform: scale(1.05); background-color: #002a75; }
-
-        #result {
-            margin-top: 30px;
+            width: 100%;
             padding: 15px;
-            border-radius: 8px;
-            display: none;
-            border-left: 5px solid var(--accent);
-            background: #fff5f5;
-            text-align: left;
+            background: var(--sweden-gold);
+            color: var(--dark-bg);
+            border: none;
+            border-radius: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 205, 0, 0.3);
         }
 
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 205, 0, 0.5);
+            filter: brightness(1.1);
+        }
+
+        /* Resultat-sektion */
+        #result {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(255, 205, 0, 0.1);
+            border-radius: 12px;
+            border: 1px solid var(--sweden-gold);
+            display: none;
+            text-align: left;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        /* Animationer */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Laddnings-snurra */
         .loader {
             display: none;
-            margin: 20px auto;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid var(--primary);
-            border-radius: 50%;
             width: 30px;
             height: 30px;
-            animation: spin 1s linear infinite;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top: 3px solid var(--sweden-gold);
+            border-radius: 50%;
+            margin: 1.5rem auto;
+            animation: spin 0.8s linear infinite;
         }
 
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>Milano Cortina 2026</h1>
-    <p>Låt vår AI förutspå medaljchanserna för ditt lag.</p>
-    
-    <select id="teamSelect">
-        <option value="Sverige">Sverige (Tre Kronor)</option>
-        <option value="Kanada">Kanada</option>
-        <option value="USA">USA</option>
-        <option value="Finland">Finland</option>
-        <option value="Schweiz">Schweiz</option>
-    </select>
-
-    <button onclick="predict()">Kör AI-Analys</button>
-
-    <div class="loader" id="loader"></div>
-
-    <div id="result">
-        <h3 id="resTitle"></h3>
-        <p id="resText"></p>
-        <strong id="resProbability"></strong>
-    </div>
-</div>
-
-<script>
-    const data = {
-        "Sverige": {
-            analysis: "Tre Kronor har visat stark defensiv under Hallam, men behöver att Lucas Raymond och EP40 levererar i PP.",
-            prob: "15% chans för Guld, 40% chans för Medalj."
-        },
-        "Kanada": {
-            analysis: "Med Connor McDavid och Sidney Crosby är Kanada den statistiska favoriten. Bredden i truppen är oöverträffad.",
-            prob: "45% chans för Guld."
-        },
-        "USA": {
-            analysis: "Ungt, snabbt och extremt skickligt lag. Deras målvaktssida ser starkast ut i turneringen.",
-            prob: "25% chans för Guld."
-        },
-        "Finland": {
-            analysis: "Sisu och struktur. Finland underskattas alltid men deras kollektiva försvarsspel är världsklass.",
-            prob: "10% chans för Guld."
-        },
-        "Schweiz": {
-            analysis: "Den stora utmanaren. Kan skrälla mot vilket storlag som helst i en kvartsfinal.",
-            prob: "5% chans för Guld."
-        }
-    };
-
-    function predict() {
-        const team = document.getElementById('teamSelect').value;
-        const loader = document.getElementById('loader');
-        const resultDiv = document.getElementById('result');
+    <div class="glass-card">
+        <div class="logo-container">
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/8f/Sweden_national_ice_hockey_team_logo.svg/1200px-Sweden_national_ice_hockey_team_logo.svg.png" alt="Tre Kronor Logo">
+        </div>
         
-        // Återställ och visa laddare
-        resultDiv.style.display = 'none';
-        loader.style.display = 'block';
+        <h1>AI Predictor</h1>
+        <p>Analysera medaljchanserna i Milano Cortina 2026</p>
 
-        setTimeout(() => {
-            loader.style.display = 'none';
-            resultDiv.style.display = 'block';
+        <select id="teamSelect">
+            <option value="Sverige">Sverige (Tre Kronor)</option>
+            <option value="Kanada">Kanada</option>
+            <option value="USA">USA</option>
+            <option value="Finland">Finland</option>
+        </select>
+
+        <button onclick="runAnalysis()">Starta AI-Analys</button>
+
+        <div class="loader" id="loader"></div>
+
+        <div id="result">
+            <h4 id="resTitle" style="margin-top:0; color:var(--sweden-gold)"></h4>
+            <div id="resText" style="font-size: 0.9rem; line-height: 1.4; margin-bottom: 10px;"></div>
+            <div id="resBarContainer" style="background: rgba(255,255,255,0.1); height: 8px; border-radius: 4px;">
+                <div id="resBar" style="background: var(--sweden-gold); height: 100%; width: 0%; border-radius: 4px; transition: width 1s ease-in-out;"></div>
+            </div>
+            <p id="resPercent" style="margin-top: 5px; font-weight: bold; color: white;"></p>
+        </div>
+    </div>
+
+    <script>
+        const stats = {
+            "Sverige": { text: "Stark trupp med NHL-stjärnor. Defensiven är världsklass.", chance: 85 },
+            "Kanada": { text: "Alltid favoriter. McDavid-faktorn är avgörande.", chance: 92 },
+            "USA": { text: "Snabbaste laget i turneringen. Ung talang i massor.", chance: 88 },
+            "Finland": { text: "Taktiskt geni. Kan stänga ner vilket lag som helst.", chance: 78 }
+        };
+
+        function runAnalysis() {
+            const team = document.getElementById('teamSelect').value;
+            const loader = document.getElementById('loader');
+            const resultDiv = document.getElementById('result');
+            const bar = document.getElementById('resBar');
             
-            document.getElementById('resTitle').innerText = "Analys för " + team;
-            document.getElementById('resText').innerText = data[team].analysis;
-            document.getElementById('resProbability').innerText = "AI Sannolikhet: " + data[team].prob;
-        }, 1500); // Simulerar "tänketid" för AI:n
-    }
-</script>
+            resultDiv.style.display = 'none';
+            bar.style.width = '0%';
+            loader.style.display = 'block';
 
+            setTimeout(() => {
+                loader.style.display = 'none';
+                resultDiv.style.display = 'block';
+                
+                document.getElementById('resTitle').innerText = team + " Analys";
+                document.getElementById('resText').innerText = stats[team].text;
+                document.getElementById('resPercent').innerText = stats[team].chance + "% chans till medalj";
+                
+                // Animera mätaren
+                setTimeout(() => {
+                    bar.style.width = stats[team].chance + "%";
+                }, 100);
+            }, 1200);
+        }
+    </script>
 </body>
 </html>
