@@ -1,0 +1,174 @@
+/* 1. Grundinställningar */
+:root {
+    --sweden-blue: #004b87;
+    --sweden-gold: #ffcd00;
+    --italy-red: #ce2b37; /* Touch av värdnationen Italien */
+    --dark-bg: #05080a;
+    --glass-white: rgba(255, 255, 255, 0.08);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --text-main: #ffffff;
+    --text-muted: #a0a0a0;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    background-color: var(--dark-bg);
+    /* Skapar en snygg bakgrund med ljusstrålar */
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(0, 75, 135, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 90% 80%, rgba(255, 205, 0, 0.15) 0%, transparent 50%);
+    color: var(--text-main);
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+/* 2. Huvudcontainern */
+.app-container {
+    width: 95%;
+    max-width: 850px;
+    margin: 40px 0;
+    background: var(--glass-white);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 32px;
+    padding: 40px;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+}
+
+/* 3. Header & Logga */
+header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.logo-main {
+    width: 100px;
+    filter: drop-shadow(0 0 15px rgba(255, 205, 0, 0.4));
+    margin-bottom: 15px;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.logo-main:hover {
+    transform: scale(1.15) rotate(3deg);
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+    background: linear-gradient(135deg, #ffffff 0%, var(--sweden-gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0;
+}
+
+/* 4. Lag-väljaren (Horisontell scroll) */
+.team-selector {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+    scrollbar-width: none; /* Firefox */
+}
+
+.team-selector::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+
+.team-pill {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+}
+
+.team-pill:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: var(--sweden-gold);
+}
+
+.team-pill.active {
+    background: var(--sweden-gold);
+    color: var(--dark-bg);
+    box-shadow: 0 0 20px rgba(255, 205, 0, 0.4);
+}
+
+/* 5. Flikar/Tabs */
+.tabs-nav {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.tab-link {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid transparent;
+    transition: 0.3s;
+}
+
+.tab-link.active {
+    color: white;
+    border-bottom-color: var(--sweden-gold);
+}
+
+/* 6. Innehållskort (Resultat & Trupp) */
+.content-card {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    padding: 25px;
+    animation: slideUp 0.5s ease-out;
+}
+
+.match-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.match-item:last-child { border: none; }
+
+.score-badge {
+    background: var(--sweden-gold);
+    color: var(--dark-bg);
+    padding: 5px 15px;
+    border-radius: 8px;
+    font-weight: 800;
+    font-size: 1.1rem;
+}
+
+.scorers-list {
+    font-size: 0.85rem;
+    color: var(--sweden-gold);
+    opacity: 0.8;
+    margin-top: 5px;
+}
+
+/* 7. Animationer */
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 8. Mobilanpassning */
+@media (max-width: 600px) {
+    .app-container { padding: 20px; margin: 10px; }
+    h1 { font-size: 1.8rem; }
+    .roster-grid { grid-template-columns: 1fr; }
