@@ -3,179 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Milano 2026 | Hockey Hub</title>
+    <title>Tre Kronor | OS 2026 Dashboard</title>
     <style>
         :root {
-            --gold: #ffcd00;
-            --blue: #004b87;
-            --dark: #05070a;
-            --glass: rgba(255, 255, 255, 0.07);
+            --sweden-blue: #004b87;
+            --sweden-gold: #ffcd00;
+            --dark-bg: #0a0e14;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --text: #ffffff;
         }
 
         body {
-            margin: 0; font-family: 'Segoe UI', sans-serif;
-            background: var(--dark); color: white;
-            display: flex; justify-content: center; padding: 20px;
+            margin: 0; font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text);
+            display: flex; justify-content: center; align-items: flex-start;
+            min-height: 100vh; padding-top: 50px;
         }
 
-        .app-container {
-            width: 100%; max-width: 800px;
-            background: var(--glass); backdrop-filter: blur(20px);
-            border-radius: 30px; border: 1px solid rgba(255,255,255,0.1);
-            padding: 30px; box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+        .main-container {
+            width: 90%; max-width: 600px;
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px; padding: 2rem;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
         }
 
-        /* Lag-väljare högst upp */
-        .team-selector {
-            display: flex; overflow-x: auto; gap: 15px;
-            padding-bottom: 20px; margin-bottom: 20px;
+        /* Flik-system */
+        .tabs {
+            display: flex; gap: 10px; margin-bottom: 2rem;
             border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 10px;
         }
 
-        .team-pill {
-            background: rgba(255,255,255,0.1); border: none; color: white;
-            padding: 10px 20px; border-radius: 50px; cursor: pointer;
-            white-space: nowrap; transition: 0.3s;
+        .tab-btn {
+            background: none; border: none; color: #a0a0a0;
+            padding: 10px 20px; cursor: pointer; font-weight: bold;
+            transition: 0.3s; border-radius: 8px;
         }
 
-        .team-pill.active { background: var(--gold); color: var(--dark); font-weight: bold; }
-
-        /* Flikar */
-        .tabs { display: flex; justify-content: center; gap: 20px; margin-bottom: 30px; }
-        .tab-link { 
-            color: #888; text-decoration: none; font-weight: bold; 
-            padding: 5px 10px; transition: 0.3s;
+        .tab-btn.active {
+            color: var(--sweden-gold); background: rgba(255, 205, 0, 0.1);
         }
-        .tab-link.active { color: white; border-bottom: 2px solid var(--gold); }
 
-        /* Innehåll */
-        .content-box { min-height: 300px; }
-        .match-row {
-            background: rgba(255,255,255,0.03); padding: 15px;
-            border-radius: 15px; margin-bottom: 10px;
-            display: flex; justify-content: space-between; align-items: center;
+        .tab-content { display: none; animation: fadeIn 0.5s ease; }
+        .tab-content.active { display: block; }
+
+        /* Matchkort */
+        .match-card {
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px; padding: 15px; margin-bottom: 15px;
+            border-left: 4px solid var(--sweden-gold);
         }
-        .point-leaders { color: var(--gold); font-size: 0.9rem; margin-top: 5px; }
 
-        .roster-section { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .roster-group h4 { color: var(--gold); margin-bottom: 5px; }
+        .score { font-size: 1.2rem; font-weight: bold; color: var(--sweden-gold); }
+        .scorers { font-size: 0.85rem; color: #ccc; margin-top: 5px; font-style: italic; }
 
-        /* Scrollbar styling */
-        .team-selector::-webkit-scrollbar { height: 5px; }
-        .team-selector::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+        /* Laguppställning */
+        .roster-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+            text-align: left; font-size: 0.9rem;
+        }
+
+        /* Tidigare Styles */
+        .logo-container img { width: 80px; filter: drop-shadow(0 0 10px rgba(255,205,0,0.3)); }
+        select, button { width: 100%; padding: 15px; border-radius: 12px; margin-top: 10px; }
+        button { background: var(--sweden-gold); border: none; font-weight: bold; cursor: pointer; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
-<div class="app-container">
-    <div class="team-selector" id="teamList">
-        </div>
-
-    <div style="text-align: center; margin-bottom: 30px;">
-        <h1 id="displayTeamName">Sverige</h1>
+<div class="main-container">
+    <div style="text-align:center;" class="logo-container">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/8f/Sweden_national_ice_hockey_team_logo.svg/1200px-Sweden_national_ice_hockey_team_logo.svg.png" alt="Tre Kronor">
+        <h2 style="margin: 10px 0;">TRE KRONOR OS 2026</h2>
     </div>
 
     <div class="tabs">
-        <a href="#" class="tab-link active" onclick="switchView(event, 'results')">Resultat</a>
-        <a href="#" class="tab-link" onclick="switchView(event, 'roster')">Truppen</a>
+        <button class="tab-btn active" onclick="openTab(event, 'ai')">AI Analys</button>
+        <button class="tab-btn" onclick="openTab(event, 'results')">Resultat & Poäng</button>
+        <button class="tab-btn" onclick="openTab(event, 'roster')">Truppen</button>
     </div>
 
-    <div id="content" class="content-box">
+    <div id="ai" class="tab-content active">
+        <p>Välj motståndare för att beräkna vinstchans i slutspelet:</p>
+        <select id="teamSelect">
+            <option value="Sverige">Sverige (AI Baseline)</option>
+            <option value="Kanada">Kanada</option>
+            <option value="USA">USA</option>
+            <option value="Finland">Finland</option>
+        </select>
+        <button onclick="alert('AI Analys körs... (Se logik i förra koden)')">Analysera Chanser</button>
+    </div>
+
+    <div id="results" class="tab-content">
+        <div class="match-card">
+            <div>Sverige 5 – 2 Italien</div>
+            <div class="scorers">Målskyttar: Landeskog, Forsling, Nylander, Zibanejad, Hedman</div>
         </div>
+        <div class="match-card">
+            <div>Finland 4 – 1 Sverige</div>
+            <div class="scorers">Målskytt: Dahlin (PP)</div>
+        </div>
+        <div class="match-card">
+            <div>Sverige 5 – 3 Slovakien</div>
+            <div class="scorers">Målskyttar: Pettersson (2), Eriksson Ek, Raymond, Kempe</div>
+        </div>
+    </div>
+
+    <div id="roster" class="tab-content">
+        <h4 style="color: var(--sweden-gold);">Uttagna NHL-stjärnor:</h4>
+        <div class="roster-grid">
+            <div><strong>Målvakter:</strong><br>Jacob Markström<br>Filip Gustavsson</div>
+            <div><strong>Backar:</strong><br>Victor Hedman<br>Erik Karlsson<br>Rasmus Dahlin</div>
+            <div><strong>Forwards:</strong><br>William Nylander<br>Elias Pettersson<br>Mika Zibanejad<br>Lucas Raymond</div>
+            <div><strong>Coach:</strong><br>Sam Hallam</div>
+        </div>
+    </div>
 </div>
 
 <script>
-    // Data för alla lag
-    const tournamentData = {
-        "Sverige": {
-            results: [
-                { opp: "Italien", score: "5 - 2", scorers: "Landeskog, Zibanejad, Nylander (2), Dahlin" },
-                { opp: "Finland", score: "1 - 4", scorers: "Pettersson" }
-            ],
-            roster: { gk: "Markström, Gustavsson", def: "Hedman, Karlsson, Dahlin", fwd: "Pettersson, Nylander, Raymond" }
-        },
-        "Kanada": {
-            results: [
-                { opp: "Schweiz", score: "6 - 1", scorers: "McDavid (3), MacKinnon, Makar, Bedard" },
-                { opp: "USA", score: "3 - 2 (OT)", scorers: "Crosby, Point, Marner" }
-            ],
-            roster: { gk: "Hill, Binnington", def: "Makar, Toews, Pietrangelo", fwd: "McDavid, Crosby, MacKinnon" }
-        },
-        "Finland": {
-            results: [
-                { opp: "Sverige", score: "4 - 1", scorers: "Rantanen (2), Barkov, Hintz" },
-                { opp: "Slovakien", score: "3 - 0", scorers: "Laine, Aho, Heiskanen" }
-            ],
-            roster: { gk: "Saros, Luukkonen", def: "Heiskanen, Lindell", fwd: "Barkov, Rantanen, Aho" }
-        },
-        "USA": {
-            results: [
-                { opp: "Slovakien", score: "7 - 2", scorers: "Matthews (2), Tkachuk, Hughes (2), Eichel, Fox" }
-            ],
-            roster: { gk: "Hellebuyck, Oettinger", def: "Fox, Hughes, McAvoy", fwd: "Matthews, Tkachuk, J. Hughes" }
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
         }
-    };
-
-    let currentTeam = "Sverige";
-    let currentView = "results";
-
-    // Skapa lag-knappar
-    function initTeams() {
-        const list = document.getElementById('teamList');
-        Object.keys(tournamentData).forEach(team => {
-            const btn = document.createElement('button');
-            btn.className = `team-pill ${team === currentTeam ? 'active' : ''}`;
-            btn.innerText = team;
-            btn.onclick = () => selectTeam(team);
-            list.appendChild(btn);
-        });
-        render();
-    }
-
-    function selectTeam(team) {
-        currentTeam = team;
-        document.querySelectorAll('.team-pill').forEach(b => b.classList.remove('active'));
-        event.target.classList.add('active');
-        document.getElementById('displayTeamName').innerText = team;
-        render();
-    }
-
-    function switchView(e, view) {
-        e.preventDefault();
-        currentView = view;
-        document.querySelectorAll('.tab-link').forEach(l => l.classList.remove('active'));
-        e.target.classList.add('active');
-        render();
-    }
-
-    function render() {
-        const container = document.getElementById('content');
-        const data = tournamentData[currentTeam];
-        container.innerHTML = "";
-
-        if (currentView === 'results') {
-            data.results.forEach(m => {
-                container.innerHTML += `
-                    <div class="match-row">
-                        <div><strong>vs ${m.opp}</strong></div>
-                        <div class="score">${m.score}</div>
-                    </div>
-                    <div class="point-leaders">Mål: ${m.scorers}</div>
-                    <hr style="opacity:0.1; margin: 15px 0;">
-                `;
-            });
-        } else {
-            container.innerHTML = `
-                <div class="roster-section">
-                    <div class="roster-group"><h4>Målvakter</h4><p>${data.roster.gk}</p></div>
-                    <div class="roster-group"><h4>Backar</h4><p>${data.roster.def}</p></div>
-                    <div class="roster-group"><h4>Forwards</h4><p>${data.roster.fwd}</p></div>
-                </div>
-            `;
+        tablinks = document.getElementsByClassName("tab-btn");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
         }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
     }
-
-    initTeams();
 </script>
 
 </body>
